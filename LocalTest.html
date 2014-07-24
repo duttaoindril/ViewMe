@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<!--
+vimek dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpkYzk2Mzc5YjkwOTI0MTY0OWEyOWZkMDNiYzg3OGUwMQ==
+robot arm dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpmYmNkYmNhOTdhN2Q0ODkwOWI1YzRmODdmMTEwMzcwYg==
+train dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpmNThhZWNlYzQwNTg0ZmI5OTIxMWY3ZWUxZWM0NTc4ZA==
+jet engine dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTozYTIyOTkwMjFjN2Y0ZjMwYTg1ZTBiY2Y3ZmYyYTQyZA==
+house dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo2YWE0MGMzOGM1YTY0Nzc0YTAyZmI0MjM1NjdhMTQ2Yw==
+GG Bridge dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo4ZmI0OGM2YzMzYWM0Y2I3YmZlYmEzNzUyNTk1OGM0Yw==
+frontloader dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpiYmIyZGZjMTA2NjY0NzczODhlNTgzMjIyM2NlMjI5Ng==
+drill dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpkZjU0YjllMDI0NDk0YmEzOTAyZmMyNGI5MGQ3NWU1Zg==
+commercial office dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZToxOTUxNDU5ZTU1MTI0N2ZhYmU4M2VkMzNhN2VjZmMwMQ==
+big machine dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpjYjI2YzNmNDhjOGI0YTQ1ODgyNGExODdlOTM1OTNmOQ==
+arizona mem dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo1YTczZGQ4NmQ0MWE0Y2IwOThjM2Q3NGFjYTNhNDIzZA==
+big NWD model dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpjZGQ3MmY0NDU1MGQ0YTUwODNhNDY0ZGU1NjU2OTlhOQ==
+quad bike dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpmMGM2YTY2ZDFjMGY0MGY5YTEzYjMzMTU5Mjc1MjU4YQ==
+jet ski dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo3NzYyNDFiZDhkM2U0NTcxOTgyODE3Y2NhMTMzNjg2MA==
+ski mobile dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpjNDBhMGU1ZjdlYTU0ODExYTQwYzgyZDE4MDRhMjI5ZA==
+motorbike  dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo2Y2JiMzZjZWFmNGE0NTQyYTUyZTk2MWQwMzZiMjFlNw==
+chainsaw dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTo1ODRiYWEyOGViZjU0Y2Y0YTFlYjg3ODJkMWY5MTQ2Ng==
+audi a3 dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpkOGNlNzJmOGFhZTQ0ODRjOTc4Y2I5ZTYyMWI5ZTYyOQ==
+Gopi Revit model dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTowNGFiM2RiOTY0YWY0N2E4OGVhZTA5ZDE0MzUyMzEyYg==
+-->
+ 
+<head>
+    <title>Viewer 3D Demo</title>
+    <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta charset="utf-8">
+ 
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="viewer3D.min.js"></script>
+    <script src="jquery-2.1.1.min.js"></script>
+ 
+    <script>
+        var theViewer;
+        //var viewers = [];
+        function initializeViewer() {
+            var options = {};
+                                                
+            // Environment controls service end points viewer uses.
+            // Development, Staging, and Production are valid values.
+            options.env = "Production";
+
+            // Access token required for authentication and authorization.
+            // It is for now a 3 legged oauth 1 access token.
+            // Here we have a hardcoded token for testing purpose.
+            // In practice you need to obtain a valid access token and pass it to viewer, instead of using this token. Note it is valid for two hours so you will need to recreate from time to time.
+            options.accessToken = "lU7i9BdGLnXWj0Fmjp2NfSL6J7o=";   // ID in step 3
+
+                // the document to load in the viewer ...
+            documentId = "urn:dXJuOmFkc2subml0cm9nZW46ZnMuZmlsZTpmYmNkYmNhOTdhN2Q0ODkwOWI1YzRmODdmMTEwMzcwYg==";   // URN in step 4 which will not work until you have completed Step 1 and 2
+ 
+            // Initialize env, service end points, and authentication.
+            initializeEnvironmentVariable(options);
+            initializeServiceEndPoints();
+            var auth = initializeAuth(null, options);
+  
+            // Use 3D viewer.
+                                                var viewerElement = document.getElementById('viewer3d');
+												//var viewer = new Autodesk.GuiViewer3D(viewerElement, {});
+												var viewer = new Autodesk.Viewing.Viewer3D(viewerElement, {});
+
+viewer.initialize();
+            theViewer = viewer;
+
+ 
+            // Load model.
+            //loadDocument(viewer, auth, documentId);
+            theViewer.loadModel('tractor2/0.svf', null, function () {
+                viewer.addEventListener('selection', mySelectionCallback);
+
+                //create a document structure panel
+                /*docStruc = new DocumentStructurePanel(theViewer);
+                var docStrucContainer = document.getElementById('docStrucContainer');
+                docStrucContainer.appendChild(docStruc.container);
+                //show the docStruc panel
+                docStruc.container.style.display = "block";
+                */
+
+            });
+
+        }
+
+ 
+        function loadDocument(viewer, auth, documentId) {
+            //var path = VIEWING_URL + '/bubbles/' + documentId.substr(4);
+ var        path = "data/tractor2/0.svf";
+
+            Autodesk.Document.load(path, auth,
+                function(document) {
+                    var svfItems = Autodesk.Document.getSubItemsWithProperties(document.getRootItem(),
+                            {'mime':'application/autodesk-svf'}, true);
+                    if(svfItems.length > 0) {
+                        viewer.load(svfItems[0].urn);
+                        viewer.addEventListener('selection', mySelectionCallback);
+
+                    }
+                }, onErrorLoadModel
+                
+            );
+        }
+ 
+        function onErrorLoadModel() {
+            var container = document.getElementById('viewer2d');
+            if (container) {
+                AlertBox.displayError(container, "LOAD Error: " + msg);
+            }
+        }
+
+
+
+
+
+        var explodeActive;
+        function action1() {
+        var explodeFraction = 0;
+        var explodeIncrement = 0.01;
+        if (explodeActive == undefined) {
+                                explodeActive = setInterval(function() {
+                                   explodeFraction += explodeIncrement;
+                                   if ((explodeFraction > 1.0)||(explodeFraction < 0.0)) {
+                                        explodeIncrement = -explodeIncrement;
+                                        explodeFraction += explodeIncrement;
+                                    }
+                                theViewer.explode(explodeFraction);
+
+                           }, 100);
+        }
+        else {
+            clearInterval(explodeActive);
+            explodeActive = undefined;
+        }
+        
+    }
+    
+    var moveActive;
+    function action2() {
+        var xStep = 30;
+        
+        if (moveActive == undefined) {
+            
+            moveActive = setInterval(function() {
+                        var cam = theViewer.getCamera();
+                        cam.translateX(xStep);
+                        theViewer.impl.applyCamera(cam);
+                        
+                    
+            }, 100);
+        }
+        else {
+            clearInterval(moveActive);
+            moveActive = undefined;
+        }
+    }
+    var storedCams=[];
+    var storedMarkups =[];
+    function actionStoreView() {
+        var vwr = theViewer;
+        var newCam = new THREE.PerspectiveCamera();
+        var curCam = vwr.getCamera();
+
+        //This is a workaround because there is a bug in PerspectiveCamera.clone()
+        //Limitation - Doesn't seem to take into account panning the camera. Not sure why.
+        for(var propt in curCam) {
+            if (typeof curCam[propt] != 'function') {
+                console.log(propt + ': ' + curCam[propt]);
+                newCam[propt] = curCam[propt];
+            }
+        }
+        storedCams.push(newCam);
+
+        var myCanvas = document.getElementById("myCanvas");
+        var ctx = myCanvas.getContext("2d");
+        var newCanvas = document.createElement('canvas');
+        copyCanvas(myCanvas, newCanvas)
+        storedMarkups.push(newCanvas);
+    }
+
+    function actionRetrieveView() {
+        var vwr = theViewer;
+        var newCam = storedCams.shift();
+        vwr.impl.applyCamera(newCam);
+        var myCanvas = document.getElementById("myCanvas");
+        copyCanvas(storedMarkups.shift(), myCanvas);
+    }
+
+    function actionCylinder() {
+        var vwr = theViewer;
+
+        var geometry = new THREE.CylinderGeometry(6,6,25,8,1, false);
+        var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        var cyl = new THREE.Mesh( geometry, material );
+        var mat = new THREE.Matrix4();
+        mat.makeTranslation(10,10,-20);
+        cyl.applyMatrix(mat);
+        vwr.impl.scene.add( cyl );
+    }
+
+        function actionShow() {
+            var div = document.getElementById("viewer3Overlay");
+            //var myCanvas = document.createElement("canvas");
+            //myCanvas.id = "myCanvas";
+            //document.body.appendChild(myCanvas);
+            var btnLine = document.getElementById("btnLine");
+            var btnCircle = document.getElementById("btnCircle");
+            var myCanvas = document.getElementById("myCanvas");
+            var ctx = myCanvas.getContext("2d");
+            if (myCanvas.style.pointerEvents == "none") {
+                btnLine.style.visibility = "visible";
+                btnCircle.style.visibility = "visible";
+                myCanvas.height = 395;
+                myCanvas.width = 1185;
+
+                //ctx.fillStyle = "#FF0000";
+                //ctx.fillRect(0, 0, 150, 75);
+                ctx.strokeStyle = "#00FF00";
+                ctx.lineWidth = 2;
+                //ctx.scale(1, 1);
+                myCanvas.style.pointerEvents = "auto";
+                //div.style.pointerEvents = "none";
+                //myCanvas.style.zIndex = "3";
+            }
+            else {
+                myCanvas.style.pointerEvents = "none";
+                btnLine.style.visibility = "hidden";
+                btnCircle.style.visibility = "hidden";
+                myCanvas.removeEventListener('click', currentHandler);}
+                ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+            //
+
+            //myCanvas.addEventListener('contextmenu', onContextMenu, false);
+        }
+
+
+        function copyCanvas(oldCanvas, newCanvas) {
+
+            //create a new canvas
+            //var newCanvas = document.createElement('canvas');
+            var newContext = newCanvas.getContext('2d');
+
+            //set dimensions
+            newCanvas.width = oldCanvas.width;
+            newCanvas.height = oldCanvas.height;
+
+
+            //apply the old canvas to the new one
+            newContext.drawImage(oldCanvas, 0, 0);
+
+            var oldContext = oldCanvas.getContext('2d');
+            newContext.strokeStyle = oldContext.strokeStyle;
+            newContext.lineWidth = oldContext.lineWidth;
+                    }
+
+
+        function actionHide() {
+
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        //        Really simple markup tool code
+        //
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Some static variables
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        var center;
+
+        var currentHandler;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Initialize the canvas
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Returns coordinates in element coord system
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        function getRelativeCoords(element, e) {
+
+            var offsetX = 0, offsetY = 0
+
+            if (element.offsetParent) {
+                do {
+                    offsetX += element.offsetLeft;
+                    offsetY += element.offsetTop;
+                } while ((element = element.offsetParent));
+            }
+
+            return { x: e.pageX - offsetX, y: e.pageY - offsetY };
+        }
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Draws a point
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        function drawPoint(canvas, x, y) {
+
+            var ctx = canvas.getContext('2d');
+
+            ctx.beginPath();
+            ctx.arc(x, y, 1, 0, 2 * Math.PI, false);
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Adds new e listener and removes previous one
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        function addNewListener(element, e, handler) {
+
+            element.removeEventListener(e, currentHandler);
+            element.addEventListener(e, handler, false);
+
+            currentHandler = handler;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Init functions for drawing
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        function initDrawLine() {
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            addNewListener(canvas, 'click', drawLineBegin);
+        }
+
+        function initDrawCircle() {
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            addNewListener(canvas, 'click', drawCircleBegin);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Drawing functions
+        //
+        ////////////////////////////////////////////////////////////////////////////////////
+        function drawLineBegin(e) {
+
+            var canvas = document.getElementById('myCanvas');
+
+            var pos = getRelativeCoords(canvas, e);
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            drawPoint(canvas, pos.x, pos.y);
+
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+
+            addNewListener(canvas, 'click', drawLine);
+        }
+
+        function drawLine(e) {
+
+            var canvas = document.getElementById('myCanvas');
+
+            var pos = getRelativeCoords(canvas, e);
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function drawCircleBegin(e) {
+
+            var canvas = document.getElementById('myCanvas');
+
+            var pos = getRelativeCoords(canvas, e);
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            drawPoint(canvas, pos.x, pos.y);
+
+            center = pos;
+
+            addNewListener(canvas, 'click', drawCircle);
+        }
+
+        function drawCircle(e) {
+
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            var pos = getRelativeCoords(canvas, e);
+
+            var radius =
+                    Math.sqrt((pos.x - center.x) * (pos.x - center.x) +
+                            (pos.y - center.y) * (pos.y - center.y));
+
+            ctx.beginPath();
+            ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+            ctx.stroke();
+            ctx.closePath();
+
+            addNewListener(canvas, 'click', drawCircleBegin);
+        }
+
+  
+
+    //This simply stores the last selected fragment - for use with actionMarkElement
+    var lastSelectionFrags = [];
+    function mySelectionCallback(event) {
+        lastSelectionFrags = event.fragIdsArray;
+    }
+ 
+     var oldMats = {};	// an object rather than an array
+	 
+	 function actionUnMarkElement() {
+         var vwr = theViewer;
+		 
+		 // loop round all the changed fragments and reset them
+		 for (var fragId in oldMats) {
+			var mesh = vwr.impl.modelQueue.vizmeshes[fragId];
+			mesh.material = oldMats[fragId];
+		 }
+		 
+		 // force a refresh
+		 vwr.impl.needsClear = true;
+		 
+		 // reset object
+		 oldMats = {};
+	 }
+
+     //Changes material of last selected object
+     function actionMarkElement() {
+         var vwr = theViewer;
+		 
+		 //var fragId = lastSelectionFrags[0];
+		 if (!(lastSelectionFrags == undefined)) {
+             // fragId id the index of the mesh in the vizmeshes array
+             for (var fragId in lastSelectionFrags) {
+
+                 var mesh = vwr.impl.modelQueue.vizmeshes[fragId];
+
+                 if (mesh) {
+                     // store the old material
+                     oldMats[fragId] = mesh.material;
+
+                     // replace with new material
+                     var newMaterial = new THREE.MeshBasicMaterial({ color: 0x009900 });
+                     mesh.material = newMaterial;
+
+                     // might be nicer to use overlays (easier to reset) but cannot get this to work properly yet
+                     //mesh.selectionProxy = new THREE.Mesh(mesh.geometry, newMaterial, true);
+                     //mesh.selectionProxy.matrixWorld = mesh.matrixWorld;
+                     //vwr.impl.addOverlay("selection", mesh.selectionProxy);
+                 }
+            }
+			 
+		 }		 
+     }
+
+
+    //Test function
+    function actionGetObjectTree() {
+        var vwr = theViewer;
+        var h = vwr.impl.camera.orthoHeight;
+        var frags;
+        vwr.getObjectTree(function(tree) {
+            var i= 0;
+        });
+    }
+
+
+    var storedViews2 = [];
+    function actionStoreView2() {
+        var thisView = [];
+        var cam = theViewer.getCamera();
+        var tmp = cam.position;
+        thisView[0] = tmp.x;
+        thisView[1] = tmp.y;
+        thisView[2] = tmp.z;
+        tmp = cam.target;
+        thisView[3] = tmp.x;
+        thisView[4] = tmp.y;
+        thisView[5] = tmp.z;
+        tmp = cam.up;
+        thisView[6] = tmp.x;
+        thisView[7] = tmp.y;
+        thisView[8] = tmp.z;
+        thisView[9] = cam.aspect;
+        thisView[10] = cam.fov;
+        //Can't find where 'orthoHeight' is available or used, so I'm assuming this is for future use (with an ortho camera)
+        thisView[11] = 1;
+        //From the source code, it looks like this isn't really used - its always a perspective camera
+        thisView[12] = cam.isPerspective;
+        storedViews2.push(thisView);
+    }
+
+
+    function actionRetrieveView2() {
+        var newView = storedViews2.shift()
+        theViewer.setViewFromArray(newView);
+        //theViewer.applyCamera(false);
+    }
+
+
+
+        /*
+        position-x 305.8747212114096
+        -y 329.58248071140963
+        -z 300.280524524971
+        target-x 0
+        -y 24.227310180664062
+        -z -5.18143367767334
+        up-x 0
+        -y 1
+        -z 0
+        aspect 3
+        fov 10
+        orthoHeight
+        isPerspective true
+
+        */
+
+    /*********************************************
+    Instructions:
+    Explode button - Toggles an interval timer to animate exploding and unexploding the model in a continuous loop. You may need to increase the time interval or explode fraction for a large model.
+    Rotate button - Toggles an interval timer to rotate the camera around the view in a continuous orbit. You may need to increase the time interval or the step rate for different models.
+    Store View button - pushes view (and 2D markup - see later) onto an array
+    Retrieve View button - pops view (and 2D markup - see later) off the array ands 'replays' the stored view.
+    Add Cylinder button - Adds a green cylinder to the model. THis is a dumb object and not hooked into the model at all.
+    Toggle Markup button - There is a HTML Canvas element overlaying the view. THis button makes it intercept mouse clicks and makes the Draw line and Draw circle buttons visible.
+    Draw line button - Click start points and end points on the canvas to draw lines
+    Draw circle button - Click center points and circumference points on the canvas to draw circles
+    Mark selection - Select an element (right click) in the model and click this button to replace its material with a green texture.
+    Unmark selection - Revrts the previously marked selection to its original material
+
+     Disclaimer:
+     Don't use this as an example of best coding practice for the viewer. Its not elegant code and not an elegant UI
+     *********************************************/
+
+ 
+
+    </script>
+</head>
+ 
+<body onload="initializeViewer();" oncontextmenu="return false;">
+    <div id="viewer3d" style="position:absolute; left:0px; top:0px; width:1200px; height:400px; overflow: hidden;"></div>
+        <div id="viewer3Overlay" style="position:absolute; left:0px; top:0px; width:1200px; height:400px; border-color: black; overflow-y: scroll; overflow-x:auto; border-style:solid; border-width: 1px; pointer-events:none; z-index:2" >
+        <canvas id="myCanvas" style="width:1183px; height:395px; overflow-y: hidden; overflow-x:hidden; pointer-events:none;"></canvas>
+    </div>
+    <div id="buttons" style="position:absolute; left:0px; top:450px; width:1200px; height:200px; border-color: black; overflow-y: scroll; overflow-x:auto; border-style:solid; border-width: 1px;">
+        <Button onclick="action1()">Explode</Button>
+        <Button onclick="action2()">Rotate</Button><br/>
+        <Button onclick="actionStoreView2()">Record view</Button>
+        <Button onclick="actionRetrieveView2()">Retrieve view</Button><br/>
+        <Button onclick="actionCylinder()">Add cylinder</Button><br/>
+        <Button onclick="actionShow()">Toggle markup</Button><Button id="btnLine" onclick="initDrawLine() "style=visibility:hidden;">Draw line</Button><Button id="btnCircle" onclick="initDrawCircle()" style=visibility:hidden;">Draw circle</Button><br/>
+        <Button onclick="actionMarkElement()">Mark selection</Button><Button onclick="actionUnMarkElement()">UnMark selection</Button><br/>
+        <Button onclick="actionGetObjectTree()">Object Tree</Button><br/>
+
+    </div>
+</body>
+ 
+</html>
+
+
+

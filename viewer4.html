@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
+</head>
+<body onload="initialize()">
+    <div id="viewer" style="position:absolute; width:90%; height:90%;"></div>
+    <script src="js/viewer3D.min.js"></script>
+    <script>
+    	function initialize () {
+    		var options ={ "document" : "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y3lyaWxsZS9ydWRpLmR3Zw==" } ; // Access File Code
+    		var viewerElement =document.getElementById ("viewer") ;
+    		var viewer =new Autodesk.Viewing.Viewer3D (viewerElement, {}) ;
+    		viewer.initialize () ;
+    		Autodesk.Viewing.Initializer (options, function () {
+    			loadDocument (viewer, "wm1Z2fDStehit27wFHXG4rE80CU7", options.document); /*SWljtB6Bgx61VxlKv6Rh8pEHeV2F*/
+    		}) ;
+    	}
+
+    	function getURLParameterByName (name) {
+    		name =name.replace (/[\[]/, "\\[").replace (/[\]]/, "\\]") ;
+    		var regex =new RegExp ("[\\?&]" + name + "=([^&#]*)") ;
+    		results =regex.exec (location.search) ;
+    		return (results == null ? "" : decodeURIComponent (results [1].replace (/\+/g, " "))) ;
+    	}
+
+    	function loadDocument (viewer, auth, documentId) {
+    		// Find the first 3d geometry and load that.
+    		Autodesk.Viewing.Document.load (documentId, auth,
+            function (doc) { // onLoadCallback
+                var geometryItems =[] ;
+                geometryItems =Autodesk.Viewing.Document.getSubItemsWithProperties (doc.getRootItem (), { "type" : "geometry", "role" : "3d" }, true) ;
+                if ( geometryItems.length > 0 )
+                    viewer.load (doc.getViewablePath (geometryItems [0])) ;
+            },
+            function (errorMsg) { // onErrorCallback
+                alert("Load Error: " + errorMsg) ;
+            }) ;
+    	}
+    </script>
+    <script src="js/pubnub.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
